@@ -42,6 +42,10 @@ const Container = styled.div`
   height: 50vh;
   background-image: ${({theme}) => theme.backgroundImage};
   background-repeat: no-repeat;
+
+  @media only screen and (max-width: 375px) {
+        height: 40vh;
+      }
 `
 
 export default App

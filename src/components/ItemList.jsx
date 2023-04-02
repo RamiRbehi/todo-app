@@ -12,7 +12,7 @@ const ItemList = ({ tasks, toggleComplete, deleteTask }) => {
 
     const darkTheme = {
         color: "hsl(234, 39%, 85%)",
-        backgroundColor: "hsl(235, 21%, 11%)",
+        backgroundColor: "hsl(235, 24%, 19%)",
     }
 
   return (
@@ -21,16 +21,20 @@ const ItemList = ({ tasks, toggleComplete, deleteTask }) => {
     {Array.isArray(tasks) && tasks.length > 0 ? (
         tasks.map((task) =>(
         <List key={task.id}>
-            <Circle checked={task.isCompleted}
+            
+            <Circle tabIndex={0} checked={task.isCompleted}
                     onClick={() => toggleComplete(task.id)}
                  >
                     <CheckMark src='../../public/images/icon-check.svg'  width="11" height="9">
                         <path fill="none" stroke="#FFF" strokeWidth="2" d="M1 4.304L3.696 7l6-6"/>
                     </CheckMark>
                  </Circle>
+
             <ListItems completed={task.isCompleted}
                     onClick={() => toggleComplete(task.id)}>
-                    {task.text}</ListItems>
+                    {task.text}
+            </ListItems>
+
                 <CrossMark
                 onClick={() => deleteTask(task.id)}
                 src='../../public/images/icon-cross.svg' width="18" height="18">
@@ -52,6 +56,10 @@ const Container= styled.div`
     border-radius: 5px; 
     background-color: ${({theme}) => theme.backgroundColor};
     color: ${({theme}) => theme.color};
+
+    @media only screen and (max-width: 375px) {
+        width: 80vw;
+      }
     
 `
 const List= styled.ul`
@@ -64,8 +72,9 @@ const List= styled.ul`
     padding-left: 60px;
 `
 const ListItems= styled.li`
-      text-decoration: ${props => props.completed ? 'line-through' : 'none'};
-      color: ${props => props.completed ? 'hsl(236, 9%, 61%)' : 'hsl(235, 19%, 35%)'};
+    text-decoration: ${props => props.completed ? 'line-through' : 'none'};
+    color: ${props => props.completed ? 'hsl(236, 9%, 61%)' : 'hsl(235, 19%, 35%)'};
+    flex: 2;
 `
 const Circle = styled.div`
     width: 25px;
@@ -73,13 +82,20 @@ const Circle = styled.div`
     border-radius: 50%;
     border: solid 1px hsl(233, 11%, 84%);
     position: absolute;
-    top: 12px;
-    left: 10px;
+    top: 0px;
+    right: 50px;
     display: grid;
     place-items: center;
     cursor: pointer;
+    position: relative;
+    /* & svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    } */
 
-    &:active,
+    &:focus,
     &:hover{
         background: linear-gradient(-50deg, hsl(0, 0%, 98%),hsl(0, 0%, 98%) ) padding-box,
                     linear-gradient(-50deg, hsl(280, 87%, 65%),hsl(192, 100%, 67%) ) border-box;
@@ -87,7 +103,7 @@ const Circle = styled.div`
         border: 1px solid transparent; 
     }
 
-    &:active{
+    &:focus{
         background: linear-gradient(-50deg, hsl(280, 87%, 65%),hsl(192, 100%, 67%) )  ;
     }
 `

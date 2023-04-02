@@ -21,7 +21,7 @@ const InputForm = ({addTask}) => {
     }
 
     const darkTheme = {
-        backgroundColor: "hsl(235, 21%, 11%)",
+        backgroundColor: "hsl(235, 24%, 19%)",
     }
 
   return (
@@ -42,6 +42,10 @@ const InputForm = ({addTask}) => {
 const Container = styled.div`
     width: 40vw;
     padding-bottom: 20px;
+
+    @media only screen and (max-width: 375px) {
+        width: 80vw;
+      }
 `
 const Form = styled.form`
     position: relative;
@@ -59,12 +63,14 @@ const Input = styled.input`
     width: 100%;
     height: 50px;
     border: none;
-    border-radius: 5px; 
+    border-radius: 5px;
+    color: hsl(235, 19%, 35%);
+    font-size: 16px;
     background-color: ${({theme}) => theme.backgroundColor};
-    &[type="text"]::placeholder {
-  padding-left: 60px;
-}
-    
+
+    &[type="text"] {
+    text-indent: 60px;
+  }
 `
 
 export default InputForm

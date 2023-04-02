@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import InputForm from './InputForm'
 import ItemList from './ItemList'
 import ControlButtons from './ControlButtons'
+import styled from 'styled-components'
 
 const TodoComponent = () => {
     const [tasks, setTasks] = useState([]);
@@ -32,28 +33,51 @@ const TodoComponent = () => {
     const filter = (filterType) => {
         switch (filterType) {
             case 'all':
-              return setTasks(tasks);
+               const allTasks = tasks;
+               if(allTasks === tasks) {
+                setTasks(allTasks);
+               }
+               break;
             case 'active':
-              return setTasks(tasks.filter((task) => !task.isCompleted));
+               const activeTasks = tasks.filter((task) => !task.isCompleted);
+               if (activeTasks.length > 0) {
+                setTasks(activeTasks);
+               }
+               break;
             case 'completed':
-              return setTasks(tasks.filter((task) => task.isCompleted));
+              const completedTasks = tasks.filter((task) => task.isCompleted);
+              if (completedTasks.length > 0) {
+                setTasks(completedTasks);
+              }
+              break;
             default:
-              return setTasks(tasks);
+               setTasks(tasks);
           }
     };
 
     const clearCompleted = () => {
-        const completedTasks = tasks.filter((task) => !task.isCompleted);
-        setTasks(completedTasks);
-    };
+      const completedTasks = tasks.filter((task) => task.isCompleted);
+      setTasks(completedTasks);
+  };
  
   return (
-    <div>
+    <Container>
         <InputForm addTask={addTask}/>
         <ItemList tasks={tasks} toggleComplete={toggleComplete} deleteTask={deletetTask}/>
         <ControlButtons tasks={tasks} filter={filter} clearCompleted={clearCompleted}/>
-    </div>
+    </Container>
   )
 }
+
+const Container =styled.div`
+  z-index: 1;
+  position: absolute;
+  top: 220px;
+  box-shadow: 0 0 15px 0px hsl(233, 14%, 35%);
+
+  @media only screen and (max-width: 375px) {
+        top: 120px;
+      }
+`
 
 export default TodoComponent

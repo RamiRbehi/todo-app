@@ -12,10 +12,11 @@ const ControlButtons = ({ tasks, filter, clearCompleted }) => {
 
     const darkTheme = {
         colorHover: "hsl(236, 33%, 92%)",
-        backgroundColor: "hsl(235, 21%, 11%)",
+        backgroundColor: "hsl(235, 24%, 19%)",
     }
 
   return (
+    <>
     <Container theme={{...lightTheme, ...(isDarkMode && darkTheme)}}>
         <NumberItems>{activeTasks.length} items left</NumberItems>
         <CenterDiv>
@@ -25,6 +26,12 @@ const ControlButtons = ({ tasks, filter, clearCompleted }) => {
         </CenterDiv>
         <ClearCompleted onClick={clearCompleted}>Clear Completed</ClearCompleted>
     </Container>
+        <CenterMobileDiv>
+            <All onClick={() => filter("all")}>All</All>
+            <Active onClick={() => filter("active")}>Active</Active>
+            <Completed onClick={() => filter("completed")}>Completed</Completed>
+        </CenterMobileDiv>
+    </>
   )
 }
 
@@ -36,6 +43,10 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media only screen and (max-width: 375px) {
+        width: 80vw;
+      }
 `
 
 const NumberItems = styled.p`
@@ -47,6 +58,16 @@ const CenterDiv = styled.div`
     display: flex;
     justify-content: space-between;
     gap: 10px;
+
+    @media only screen and (max-width: 375px) {
+        display: none;
+    }
+`
+const CenterMobileDiv = styled.div`
+    @media only screen and (max-width: 375px) {
+        display: block;
+        padding-top: 20px;
+    }
 `
 const All = styled.button`
     border: none;

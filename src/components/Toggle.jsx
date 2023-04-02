@@ -4,6 +4,8 @@ import { ThemeContext } from './ThemeContext'
 import { DarkMode } from './DarkMode'
 import bgDesktopLight from '../assets/images/bg-desktop-light.jpg'
 import bgDesktopDark from '../assets/images/bg-desktop-dark.jpg'
+import bgMobileLight from '../assets/images/bg-mobile-light.jpg'
+import bgMobileDark from '../assets/images/bg-mobile-dark.jpg'
 
 
 const Toggle = () => {
@@ -11,15 +13,26 @@ const Toggle = () => {
 
     const lightTheme = {
         backgroundImage: `url(${bgDesktopLight})`,
-        backgroundColor: "hsl(0, 0%, 98%)",
+        backgroundColor: "hsl(236, 33%, 92%)",
     }
 
     const darkTheme = {
         backgroundImage: `url(${bgDesktopDark})`,
         backgroundColor: "hsl(235, 21%, 11%)",
     }
+
+    const mobilelightTheme = {
+        backgroundMobileImage: `url(${bgMobileLight})`,
+        backgroundColor: "hsl(236, 33%, 92%)",
+    }
+
+    const mobiledarkTheme = {
+        backgroundMobileImage: `url(${bgMobileDark})`,
+        backgroundColor: "hsl(235, 21%, 11%)",
+    }
   return (
-    <Container theme={{...lightTheme, ...(isDarkMode && darkTheme)}}>
+    <Container theme={{...lightTheme, ...(isDarkMode && darkTheme)}}
+    mobileTheme={{...mobilelightTheme, ...(isDarkMode && mobiledarkTheme)}}>
         {/* <BackgroundImage theme={isDarkMode ? darkTheme : lightTheme} ></BackgroundImage> */}
         <Wrapper>
             <Logo>TODO</Logo>
@@ -53,17 +66,26 @@ const Container = styled.div`
     background-image: ${({theme}) => theme.backgroundImage};
     background-repeat: no-repeat;
     width: 100%;
+
+    @media only screen and (max-width: 375px) {
+        background-image: ${({mobileTheme}) => mobileTheme.backgroundMobileImage};
+        padding-top: 40px;
+    }
 `
-const BackgroundImage = styled.div`
-    width: 100vw;
-    height: 40vh;
-    background-image: ${({theme}) => theme.backgroundImage};
-    background-size: cover;
-`
+// const BackgroundImage = styled.div`
+//     width: 100vw;
+//     height: 40vh;
+//     background-image: ${({theme}) => theme.backgroundImage};
+//     background-size: cover;
+// `
 const Wrapper = styled.div`
     width: 40vw;
     display: flex;
     justify-content: space-between;
+
+    @media only screen and (max-width: 375px) {
+        width: 80vw;
+      }
 `
 const Logo = styled.p`
     color: hsl(0, 0%, 98%);
