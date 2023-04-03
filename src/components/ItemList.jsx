@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { ThemeContext } from './ThemeContext';
 
-const ItemList = ({ tasks, toggleComplete, deleteTask }) => {
+const ItemList = ({handleDragStart, handleDragOver, handleDrop, tasks, toggleComplete, deleteTask }) => {
     const {isDarkMode} = useContext(ThemeContext);
 
     const lightTheme = {
@@ -15,12 +15,38 @@ const ItemList = ({ tasks, toggleComplete, deleteTask }) => {
         backgroundColor: "hsl(235, 24%, 19%)",
     }
 
+    const handleTouchStart = (e, index) => {
+        e.stopPropagation();
+        e.preventDefault();
+        handleDragStart(e, index);
+    };
+
+    const handleTouchMove = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        handleDragOver(e);
+    };
+
+    const handleTouchEnd = (e, index) => {
+        e.stopPropagation();
+        e.preventDefault();
+        handleDrop(e, index);
+    }
+
   return (
     <>
     <Container theme={{...lightTheme, ...(isDarkMode && darkTheme)}}>
     {Array.isArray(tasks) && tasks.length > 0 ? (
-        tasks.map((task) =>(
-        <List key={task.id}>
+        tasks.map((task, index) =>(
+        <List key={task.id}
+              draggable="true"
+              onDragStart={(e) => handleDragStart(e, index)}
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, index)}
+              onTouchStart={(e) => handleTouchStart(e, index)}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={(e) => handleTouchEnd(e, index)}
+            >
             
             <Circle tabIndex={0} checked={task.isCompleted}
                     onClick={() => toggleComplete(task.id)}
@@ -30,8 +56,7 @@ const ItemList = ({ tasks, toggleComplete, deleteTask }) => {
                     </CheckMark>
                  </Circle>
 
-            <ListItems completed={task.isCompleted}
-                    onClick={() => toggleComplete(task.id)}>
+            <ListItems completed={task.isCompleted}>
                     {task.text}
             </ListItems>
 
@@ -53,7 +78,6 @@ const ItemList = ({ tasks, toggleComplete, deleteTask }) => {
 const Container= styled.div`
     position: relative; 
     width: 40vw;
-    border-radius: 5px; 
     background-color: ${({theme}) => theme.backgroundColor};
     color: ${({theme}) => theme.color};
 
@@ -70,6 +94,7 @@ const List= styled.ul`
     justify-content: space-between;
     align-items: center;
     padding-left: 60px;
+    cursor: grab;
 `
 const ListItems= styled.li`
     text-decoration: ${props => props.completed ? 'line-through' : 'none'};

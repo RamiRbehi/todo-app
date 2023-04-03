@@ -5,6 +5,7 @@ import { ThemeContext } from './ThemeContext';
 const ControlButtons = ({ tasks, filter, clearCompleted }) => {
     const {isDarkMode} = useContext(ThemeContext);
     const activeTasks = Array.isArray(tasks) ? tasks.filter((task) => !task.isCompleted) : []
+    
     const lightTheme = {
         colorHover: "hsl(235, 24%, 19%)",
         backgroundColor: "hsl(0, 0%, 98%)",
@@ -25,12 +26,15 @@ const ControlButtons = ({ tasks, filter, clearCompleted }) => {
             <Completed onClick={() => filter("completed")}>Completed</Completed>
         </CenterDiv>
         <ClearCompleted onClick={clearCompleted}>Clear Completed</ClearCompleted>
-    </Container>
-        <CenterMobileDiv>
+       
+        <CenterMobileDiv theme={{...lightTheme, ...(isDarkMode && darkTheme)}}>
             <All onClick={() => filter("all")}>All</All>
             <Active onClick={() => filter("active")}>Active</Active>
             <Completed onClick={() => filter("completed")}>Completed</Completed>
         </CenterMobileDiv>
+
+        <Note>Drag and drop to reorder list</Note>
+    </Container>
     </>
   )
 }
@@ -38,11 +42,11 @@ const ControlButtons = ({ tasks, filter, clearCompleted }) => {
 const Container = styled.div`
     width: 40vw;
     padding: 20px 0;
-    border-radius: 5px; 
     background-color: ${({theme}) => theme.backgroundColor};
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 
     @media only screen and (max-width: 375px) {
         width: 80vw;
@@ -64,9 +68,17 @@ const CenterDiv = styled.div`
     }
 `
 const CenterMobileDiv = styled.div`
+     display: none;
+     border-radius: 5px;
+     
     @media only screen and (max-width: 375px) {
-        display: block;
-        padding-top: 20px;
+        background-color: ${({theme}) => theme.backgroundColor};
+        display: flex;
+        justify-content: space-around;
+        width: 70vw;
+        position: absolute;
+        top: 80px;
+        padding: 20px;
     }
 `
 const All = styled.button`
@@ -109,6 +121,16 @@ const ClearCompleted = styled.button`
         color: hsl(235, 19%, 35%);
     }
 `
+const Note = styled.p`
+  position: absolute;
+  top: 200px;
+  right: 180px;
+  color: hsl(236, 9%, 61%);
 
+  @media only screen and (max-width: 375px) {
+    top: 180px;
+    right: 50px;
+    }
+`
 
 export default ControlButtons

@@ -1,9 +1,8 @@
 import styled from 'styled-components'
 import './App.css'
 import InputForm from './components/InputForm'
-import { ThemeContext, ThemeProvider } from './components/ThemeContext'
+import { ThemeProvider } from './components/ThemeContext'
 import Toggle from './components/Toggle'
-import { useContext } from 'react'
 import bgDesktopLight from './assets/images/bg-desktop-light.jpg'
 import bgDesktopDark from './assets/images/bg-desktop-dark.jpg'
 import ItemList from './components/ItemList'
@@ -33,13 +32,10 @@ function App() {
 }
 const Container = styled.div`
   display: flex;
-  /* place-items: center; */
   flex-direction: column;
     justify-content: start;
     align-items: center;
-    /* padding-top: 120px; */
-  /* gap: 20px; */
-  height: 50vh;
+  height: 40vh;
   background-image: ${({theme}) => theme.backgroundImage};
   background-repeat: no-repeat;
 
