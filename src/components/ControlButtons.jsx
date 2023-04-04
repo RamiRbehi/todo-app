@@ -123,12 +123,12 @@ const ClearCompleted = styled.button`
 `
 const Note = styled.p`
   position: absolute;
-  top: 200px;
+  top: 100px;
   right: 180px;
   color: hsl(236, 9%, 61%);
 
   @media only screen and (max-width: 375px) {
-    top: 180px;
+    top: 150px;
     right: 50px;
     }
 `

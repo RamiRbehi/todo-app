@@ -7,9 +7,14 @@ import { ThemeContext } from './ThemeContext'
 
 const TodoComponent = () => {
   const {isDarkMode} = useContext(ThemeContext);
-  const [tasks, setTasks] = useState([]);
-
-    console.log(tasks);
+  const [tasks, setTasks] = useState([
+    {id: 1, text: "Complete online JavaScript course", isCompleted: true},
+    {id: 2, text: "Jog around the park 3x", isCompleted: false},
+    {id: 3, text: "10 minutes meditation", isCompleted: false},
+    {id: 4, text: "Read for 1 hour", isCompleted: false},
+    {id: 5, text: "Pick up groceries", isCompleted: false},
+    {id: 6, text: "Complete Todo App on Frontend Mentor", isCompleted: false},
+  ]);
 
     const addTask = (newTask) => {
         const newTasks = [...tasks, {id: Date.now(), text: newTask, isCompleted: false}];
@@ -103,7 +108,6 @@ const darkTheme = {
         tasks={tasks} 
         filter={filter} 
         clearCompleted={clearCompleted}/>
-        {/* <Note>Drag and drop to reorder list</Note> */}
     </Container>
   )
 }
@@ -112,18 +116,15 @@ const Container =styled.div`
   background-color: ${({theme}) => theme.backgroundColor};
   z-index: 1;
   position: absolute;
-  top: 220px;
+  top: 120px;
   box-shadow: 0 0 15px 0px hsl(233, 14%, 35%);
   display: flex;
   flex-direction: column;
   border-radius: 5px; 
 
   @media only screen and (max-width: 375px) {
-        top: 120px;
+        top: 100px;
       }
 `
-// const Note = styled.p`
-  
-// `
 
 export default TodoComponent

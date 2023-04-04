@@ -98,7 +98,6 @@ const List= styled.ul`
 `
 const ListItems= styled.li`
     text-decoration: ${props => props.completed ? 'line-through' : 'none'};
-    color: ${props => props.completed ? 'hsl(236, 9%, 61%)' : 'hsl(235, 19%, 35%)'};
     flex: 2;
 `
 const Circle = styled.div`
@@ -113,12 +112,6 @@ const Circle = styled.div`
     place-items: center;
     cursor: pointer;
     position: relative;
-    /* & svg {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    } */
 
     &:focus,
     &:hover{
